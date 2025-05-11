@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [guess, setGuess] = useState('');
+  const [message, setMessage] = useState('');
+  const correctAnswer = 'Ferrari'; // Example correct answer
+  const carSound = '/sounds/ferrari.mp3'; // Path to the car sound file
+
+  const handleGuess = () => {
+    if (guess.toLowerCase() === correctAnswer.toLowerCase()) {
+      setMessage('Correct! You guessed the car!');
+    } else {
+      setMessage('Incorrect. Try again!');
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="vrrdle">
+      <h1>Vrrdle</h1>
+      <p>Guess the car based on its sound!</p>
+      <audio controls>
+        <source src={carSound} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <div className="guess-section">
+        <input
+          type="text"
+          placeholder="Enter your guess"
+          value={guess}
+          onChange={(e) => setGuess(e.target.value)}
+        />
+        <button onClick={handleGuess}>Submit Guess</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      {message && <p className="message">{message}</p>}
+    </div>
+  );
 }
 
-export default App
+export default App;

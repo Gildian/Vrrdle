@@ -9,5 +9,4 @@ public class VrrdleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VrrdleApplication.class, args);
 	}
-
 }

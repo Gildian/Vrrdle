@@ -11,6 +11,6 @@ public class CarResource {
 
     @GetMapping("/")
     public String index() {
-        return carService.getAllCars().toString();
+        return carService.getRandomCar().toString();
     }
 }
