@@ -9,7 +9,7 @@ public class CarResource {
         this.carService = carService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/api/cars")
     public String index() {
         return carService.getRandomCar().toString();
     }

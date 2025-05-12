@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import { getRandomCar } from './api/ApiService';
 
 function App() {
   const [guess, setGuess] = useState('');
@@ -31,6 +32,12 @@ function App() {
           onChange={(e) => setGuess(e.target.value)}
         />
         <button onClick={handleGuess}>Submit Guess</button>
+
+        <button onClick={() => {
+          getRandomCar()
+            .then(car => console.log(car))
+            .catch(error => console.error('Error fetching car:', error));
+        }}>Get Random Car</button>
       </div>
       {message && <p className="message">{message}</p>}
     </div>
