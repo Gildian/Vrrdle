@@ -1,11 +1,4 @@
 import { apiClient } from './ApiClient'
 
-export const getRandomCar = async () => {
-    try {
-        const response = await apiClient.get('/api/cars');
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching random car:', error);
-        throw error;
-    }
-}
+export const getRandomCar
+= () => apiClient.get('/api/cars')

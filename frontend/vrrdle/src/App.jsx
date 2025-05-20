@@ -1,17 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { getRandomCar } from './api/ApiService';
 
 function App() {
   const [guess, setGuess] = useState('');
   const [message, setMessage] = useState('');
-  const correctAnswer = 'Ferrari'; // Example correct answer
-  const carSound = '/sounds/ferrari.mp3'; // Path to the car sound file
+  const [correctAnswer, setCorrectAnswer] = useState(''); // Example correct answer
+  const [carSound, setCarSound] = useState(''); // Example sound URL
+
+    useEffect(() => {
+    fetchRandomCar();
+  }, []);
+
+  function fetchRandomCar() {
+    getRandomCar()
+      .then(response => {
+          setCorrectAnswer(response.data.name); // Assuming the API returns a car object with a name property
+          setCarSound(response.data.mp3FileName); // Assuming the API returns a sound URL
+          console.log('Fetched car:', response);
+      })
+      .catch(error => {
+          console.error('Error fetching car:', error);
+      });
+  }
 
   const handleGuess = () => {
     if (guess.toLowerCase() === correctAnswer.toLowerCase()) {
+      console.log(`Correct answer: ${correctAnswer}`);
       setMessage('Correct! You guessed the car!');
     } else {
+      console.log(`Correct answer: ${correctAnswer}`);
       setMessage('Incorrect. Try again!');
     }
   };
@@ -32,12 +50,6 @@ function App() {
           onChange={(e) => setGuess(e.target.value)}
         />
         <button onClick={handleGuess}>Submit Guess</button>
-
-        <button onClick={() => {
-          getRandomCar()
-            .then(car => console.log(car))
-            .catch(error => console.error('Error fetching car:', error));
-        }}>Get Random Car</button>
       </div>
       {message && <p className="message">{message}</p>}
     </div>

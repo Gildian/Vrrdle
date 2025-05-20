@@ -10,7 +10,8 @@ public class CarResource {
     }
 
     @GetMapping("/api/cars")
-    public String index() {
-        return carService.getRandomCar().toString();
+    public Cars index() {
+        Cars car = carService.getRandomCar();
+        return car;
     }
 }
