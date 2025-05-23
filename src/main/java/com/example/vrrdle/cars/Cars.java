@@ -1,6 +1,11 @@
 package com.example.vrrdle.cars;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Cars {
+    @Id
     private String name;
     private String make;
     private String model;
