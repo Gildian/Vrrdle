@@ -1,5 +1,6 @@
 package com.example.vrrdle.cars;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -7,9 +8,16 @@ import jakarta.persistence.Id;
 public class Cars {
     @Id
     private String name;
+    @Column(name = "make")
     private String make;
+    @Column(name = "model")
     private String model;
+    @Column(name = "mp3_file_name")
     private String mp3FileName;
+
+    public Cars() {
+        // No-argument constructor required by JPA
+    }
 
     public Cars(String name, String make, String model, String mp3FileName) {
         this.name = name;
