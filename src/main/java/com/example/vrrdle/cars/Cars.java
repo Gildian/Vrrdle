@@ -50,5 +50,5 @@ public class Cars {
                 ", model='" + model + '\'' +
                 ", mp3FileName='" + mp3FileName + '\'' +
                 '}';
-    }  
+    }
 }

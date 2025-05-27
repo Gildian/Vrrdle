@@ -56,9 +56,4 @@ function App() {
   );
 }
 
-/*
-  If your backend serves the sound file as a URL (e.g., http://localhost:5000/sounds/car.mp3),
-  and you set `carSound` to that URL, the <audio> tag will play it automatically.
-  Make sure CORS is enabled on your backend for audio file requests.
-  No further code is needed here if the backend returns a valid URL for the audio file.
-*/
+export default App;
