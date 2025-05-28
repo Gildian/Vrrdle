@@ -26,34 +26,37 @@ function App() {
 
   const handleGuess = () => {
     if (guess.toLowerCase() === correctAnswer.toLowerCase()) {
-      console.log(`Correct answer: ${correctAnswer}`);
+      console.log(`Correct answer: ${carSound}`);
       setMessage('Correct! You guessed the car!');
     } else {
-      console.log(`Correct answer: ${correctAnswer}`);
+      console.log(`Correct answer: ${carSound}`);
       setMessage('Incorrect. Try again!');
     }
   };
-
-  return (
-    <div className="vrrdle">
-      <h1>Vrrdle</h1>
-      <p>Guess the car based on its sound!</p>
-      <audio controls>
-        <source src={carSound} type="audio/mpeg" />
+  console.log('carSound value:', carSound);
+console.log('Audio source:', `http://localhost:8080${carSound}`);
+return (
+  <div className="vrrdle">
+    <h1>Vrrdle</h1>
+    <p>Guess the car based on its sound!</p>
+    {carSound && (
+      <audio controls key={carSound}>
+        <source src={`http://localhost:8080${carSound}`} type="audio/wav" />
         Your browser does not support the audio element.
       </audio>
-      <div className="guess-section">
-        <input
-          type="text"
-          placeholder="Enter your guess"
-          value={guess}
-          onChange={(e) => setGuess(e.target.value)}
-        />
-        <button onClick={handleGuess}>Submit Guess</button>
-      </div>
-      {message && <p className="message">{message}</p>}
+    )}
+    <div className="guess-section">
+      <input
+        type="text"
+        placeholder="Enter your guess"
+        value={guess}
+        onChange={(e) => setGuess(e.target.value)}
+      />
+      <button onClick={handleGuess}>Submit Guess</button>
     </div>
-  );
+    {message && <p className="message">{message}</p>}
+  </div>
+);
 }
 
 export default App;
