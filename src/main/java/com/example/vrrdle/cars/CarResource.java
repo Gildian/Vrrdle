@@ -11,7 +11,6 @@ public class CarResource {
 
     @GetMapping("/api/cars")
     public Cars index() {
-        Cars car = carService.getRandomCar();
-        return car;
+        return carService.getCarOfTheDay();
     }
 }
