@@ -11,54 +11,74 @@ function App() {
   const [guessCount, setGuessCount] = useState(0);
   const [leaderboard, setLeaderboard] = useState([]);
   const [username, setUsername] = useState('');
+  const [scoreSubmitted, setScoreSubmitted] = useState(false);
 
   useEffect(() => {
     fetchRandomCar();
     fetchLeaderboard().then(res => setLeaderboard(res.data));
   }, []);
 
-  function fetchRandomCar() {
-    getRandomCar()
-      .then(response => {
-          setCorrectAnswer(response.data.name);
-          setCarSound(response.data.mp3FileName);
-          setGuessCount(0); // Reset guess count on new car
-          setMessage('');
-      })
-      .catch(error => {
-          console.error('Error fetching car:', error);
-      });
-  }
+function fetchRandomCar() {
+  getRandomCar()
+    .then(response => {
+        setCorrectAnswer(response.data.name);
+        setCarSound(response.data.mp3FileName);
+        setGuessCount(0); // Reset guess count on new car
+        setMessage('');
+        setScoreSubmitted(false); // Reset score submission state on new car
+    })
+    .catch(error => {
+        console.error('Error fetching car:', error);
+    });
+}
+
 
   function Leaderboard() {
     fetchLeaderboard()
       .then(res => setLeaderboard(res.data))
       .catch(err => console.error('Error fetching leaderboard:', err));
   }
+const handleGuess = () => {
+  if (guessCount >= 5 || message.startsWith('Correct')) return; // Prevent guessing after 5 attempts or after correct guess
+  const newGuessCount = guessCount + 1;
+  setGuessCount(newGuessCount);
 
-  const handleSubmitScore = () => {
-    submitScore(username, guessCount)
-      .then(() => {
-        setMessage('Score submitted successfully!');
-        fetchLeaderboard().then(res => setLeaderboard(res.data));
-      })
-      .catch(err => {
-        console.error('Error submitting score:', err);
-        setMessage('Failed to submit score.');
-      });
-  };
+  if (guess.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+    setMessage('Correct! You guessed the car!');
+  } else if (newGuessCount >= 5) {
+    setMessage(`Out of guesses! The correct answer was: ${correctAnswer}`);
+  } else {
+    setMessage('Incorrect. Try again!');
+  }
+};
 
-  const handleGuess = () => {
-    if (guessCount >= 5) return; // Prevent guessing after 5 attempts
-    setGuessCount(guessCount + 1);
-    if (guess.toLowerCase() === correctAnswer.toLowerCase()) {
-      setMessage('Correct! You guessed the car!');
-    } else if (guessCount + 1 >= 5) {
-      setMessage(`Out of guesses! The correct answer was: ${correctAnswer}`);
-    } else {
-      setMessage('Incorrect. Try again!');
-    }
-  };
+const handleSubmitScore = () => {
+  if (!username.trim()) {
+    setMessage('Please enter your name before submitting.');
+    return;
+  }
+  if (scoreSubmitted) {
+    setMessage('You have already submitted your score for this round.');
+    return;
+  }
+  if (!message.startsWith('Correct') && !message.startsWith('Out of guesses')) {
+    setMessage('Finish the round before submitting your score.');
+    return;
+  }
+  
+    const score = message.startsWith('Correct') ? guessCount : 0;
+
+  submitScore(username, score)
+    .then(() => {
+      setMessage('Score submitted successfully!');
+      setScoreSubmitted(true);
+      fetchLeaderboard().then(res => setLeaderboard(res.data));
+    })
+    .catch(err => {
+      console.error('Error submitting score:', err);
+      setMessage('Failed to submit score.');
+    });
+};
 
   return (
   <div className="vrrdle">
@@ -104,7 +124,16 @@ function App() {
           value={username}
           onChange={e => setUsername(e.target.value)}
         />
-        <button onClick={handleSubmitScore}>Submit Score</button>
+        <button
+  onClick={handleSubmitScore}
+  disabled={
+    !username.trim() ||
+    scoreSubmitted ||
+    (!message.startsWith('Correct') && !message.startsWith('Out of guesses'))
+  }
+>
+  Submit Score
+</button>
       </div>
     </div>
   </div>
