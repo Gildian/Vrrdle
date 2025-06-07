@@ -1,17 +1,20 @@
-// ...existing code...
 import { useState, useEffect } from 'react';
 import './App.css';
 import { getRandomCar } from './api/ApiService';
+import { fetchLeaderboard, submitScore } from './api/ApiService';
 
 function App() {
   const [guess, setGuess] = useState('');
   const [message, setMessage] = useState('');
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [carSound, setCarSound] = useState('');
-  const [guessCount, setGuessCount] = useState(0); // Add guess count state
+  const [guessCount, setGuessCount] = useState(0);
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     fetchRandomCar();
+    fetchLeaderboard().then(res => setLeaderboard(res.data));
   }, []);
 
   function fetchRandomCar() {
@@ -27,6 +30,24 @@ function App() {
       });
   }
 
+  function Leaderboard() {
+    fetchLeaderboard()
+      .then(res => setLeaderboard(res.data))
+      .catch(err => console.error('Error fetching leaderboard:', err));
+  }
+
+  const handleSubmitScore = () => {
+    submitScore(username, guessCount)
+      .then(() => {
+        setMessage('Score submitted successfully!');
+        fetchLeaderboard().then(res => setLeaderboard(res.data));
+      })
+      .catch(err => {
+        console.error('Error submitting score:', err);
+        setMessage('Failed to submit score.');
+      });
+  };
+
   const handleGuess = () => {
     if (guessCount >= 5) return; // Prevent guessing after 5 attempts
     setGuessCount(guessCount + 1);
@@ -40,34 +61,54 @@ function App() {
   };
 
   return (
-    <div className="vrrdle">
-      <h1>Vrrdle</h1>
-      <p>Guess the car based on its sound!</p>
-      {carSound && (
-        <audio controls key={carSound}>
-          <source src={`http://localhost:8080${carSound}`} type="audio/wav" />
-          Your browser does not support the audio element.
-        </audio>
-      )}
-      <div className="guess-section">
+  <div className="vrrdle">
+    <h1>Vrrdle</h1>
+    <p>Guess the car based on its sound!</p>
+    {carSound && (
+      <audio controls key={carSound}>
+        <source src={`http://localhost:8080${carSound}`} type="audio/wav" />
+        Your browser does not support the audio element.
+      </audio>
+    )}
+    <div className="guess-section">
+      <input
+        type="text"
+        placeholder="Enter your guess"
+        value={guess}
+        onChange={(e) => setGuess(e.target.value)}
+        disabled={guessCount >= 5 || message.startsWith('Correct')}
+      />
+      <button
+        onClick={handleGuess}
+        disabled={guessCount >= 5 || message.startsWith('Correct')}
+      >
+        Submit Guess
+      </button>
+      <p>Guesses left: {5 - guessCount}</p>
+    </div>
+    {message && <p className="message">{message}</p>}
+    <div className="leaderboard-section">
+      <h2>Leaderboard</h2>
+      <ul>
+        {leaderboard.map(entry => (
+          <li key={entry.username}>
+            <span>{entry.username}</span>
+            <span>{entry.score}</span>
+          </li>
+        ))}
+      </ul>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <input
           type="text"
-          placeholder="Enter your guess"
-          value={guess}
-          onChange={(e) => setGuess(e.target.value)}
-          disabled={guessCount >= 5 || message.startsWith('Correct')}
+          placeholder="Your name"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
         />
-        <button
-          onClick={handleGuess}
-          disabled={guessCount >= 5 || message.startsWith('Correct')}
-        >
-          Submit Guess
-        </button>
-        <p>Guesses left: {5 - guessCount}</p>
+        <button onClick={handleSubmitScore}>Submit Score</button>
       </div>
-      {message && <p className="message">{message}</p>}
     </div>
-  );
+  </div>
+);
+// ...existing code...
 }
-
 export default App;
