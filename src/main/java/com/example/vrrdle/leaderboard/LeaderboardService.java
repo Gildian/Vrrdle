@@ -11,21 +11,25 @@ public class LeaderboardService {
         this.repository = repository;
     }
 
-    public List<LeaderboardEntry> getTopEntries() {
-        return repository.findAll()
-            .stream()
-            .sorted((a, b) -> Integer.compare(b.getScore(), a.getScore()))
-            .limit(10)
-            .toList();
-    }
-
-    public LeaderboardEntry submitScore(String username, int score) {
-        LeaderboardEntry entry = repository.findById(username)
-            .orElse(new LeaderboardEntry(username, 0));
+public List<LeaderboardEntry> getTopEntries() {
+    return repository.findAll()
+        .stream()
+        .sorted((a, b) -> Integer.compare(b.getScore(), a.getScore())) // Descending order
+        .limit(10)
+        .toList();
+}
+public LeaderboardEntry submitScore(String username, int score) {
+    if (repository.existsByUsername(username)) {
+        LeaderboardEntry entry = repository.findById(username).get();
         if (score > entry.getScore()) {
             entry.setScore(score);
             repository.save(entry);
         }
         return entry;
+    } else {
+        LeaderboardEntry entry = new LeaderboardEntry(username, score);
+        repository.save(entry);
+        return entry;
     }
+}
 }
