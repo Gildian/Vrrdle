@@ -18,7 +18,7 @@ public class VrrdleApplication {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-            @Override // BUG FIX: add @Override annotation for method override
+            @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                     .allowedMethods("*")
