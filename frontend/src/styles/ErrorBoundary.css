@@ -1,0 +1,58 @@
+.error-boundary {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.error-boundary-content {
+  background: #181c24;
+  border-radius: 16px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  max-width: 500px;
+  width: 100%;
+}
+
+.error-boundary-content h2 {
+  color: #dc3545;
+  margin-bottom: 1rem;
+  font-size: 2em;
+}
+
+.error-boundary-content p {
+  color: #bfc9d1;
+  margin-bottom: 2rem;
+  font-size: 1.1em;
+}
+
+.retry-button,
+.refresh-button {
+  background: #f7b801;
+  color: #181c24;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 0.5rem;
+}
+
+.retry-button:hover,
+.refresh-button:hover {
+  background: #ffd700;
+  transform: translateY(-2px);
+}
+
+.refresh-button {
+  background: #7ec4cf;
+}
+
+.refresh-button:hover {
+  background: #9dd4dc;
+}

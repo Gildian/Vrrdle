@@ -1,3 +1,10 @@
+# ===========================================
+# Vrrdle 2.0 - GitIgnore Configuration
+# ===========================================
+
+# ------------------------------------------
+# Java & Maven
+# ------------------------------------------
 # Compiled class files
 *.class
 
@@ -28,6 +35,7 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
+pom.xml.backup
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
@@ -40,11 +48,16 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### Spring Boot ###
+# ------------------------------------------
+# Spring Boot
+# ------------------------------------------
 HELP.md
 .springBeans
 spring-shell.log
 
+# ------------------------------------------
+# IDE Files
+# ------------------------------------------
 ### STS ###
 .apt_generated
 .classpath
@@ -75,7 +88,9 @@ out/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-### Node.js ###
+# ------------------------------------------
+# Node.js & Frontend
+# ------------------------------------------
 node_modules/
 npm-debug.log*
 yarn-debug.log*
@@ -83,19 +98,31 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# React build output
+# React/Vite build output
 frontend/vrrdle/dist/
 frontend/vrrdle/dist-ssr/
 frontend/vrrdle/build/
 
-# Environment variables
+# Coverage reports
+coverage/
+*.lcov
+.nyc_output/
+
+# ESLint cache
+.eslintcache
+
+# ------------------------------------------
+# Environment Variables
+# ------------------------------------------
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# ------------------------------------------
 # Operating System
+# ------------------------------------------
 .DS_Store
 .DS_Store?
 ._*
@@ -104,20 +131,59 @@ frontend/vrrdle/build/
 ehthumbs.db
 Thumbs.db
 
-# Temporary files
+# Windows
+desktop.ini
+
+# ------------------------------------------
+# Temporary Files
+# ------------------------------------------
 *.tmp
 *.temp
 *.swp
 *.swo
 *~
+*.orig
+*.rej
+*.bak
+*.backup
 
-# Database
+# ------------------------------------------
+# Database Files
+# ------------------------------------------
 *.db
 *.sqlite
 *.sqlite3
 
-# Application specific
+# ------------------------------------------
+# Application Specific
+# ------------------------------------------
 application-local.properties
 application-dev.properties
 logs/
 *.pid
+
+# Static assets (except example files)
+src/main/resources/static/sounds/
+!src/main/resources/static/sounds/example1.wav
+
+# Documentation build files
+docs/_build/
+docs/.doctrees/
+
+# ------------------------------------------
+# Security & Keys
+# ------------------------------------------
+*.pem
+*.key
+*.cert
+*.p12
+*.jks
+secrets.yml
+secrets.yaml
+
+# ------------------------------------------
+# Miscellaneous
+# ------------------------------------------
+.vagrant/
+.terraform/
+docker-compose.override.yml
