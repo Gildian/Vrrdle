@@ -28,16 +28,34 @@ public class Car {
     @Column(name = "mp3_file_name")
     @NotBlank(message = "MP3 file name cannot be blank")
     private String mp3FileName;
+    
+    @Column(name = "category")
+    @NotBlank(message = "Category cannot be blank")
+    @Size(max = 50, message = "Category must be less than 50 characters")
+    private String category;
+    
+    @Column(name = "origin_country")
+    @NotBlank(message = "Origin country cannot be blank")
+    @Size(max = 50, message = "Origin country must be less than 50 characters")
+    private String originCountry;
+    
+    @Column(name = "decade")
+    @NotBlank(message = "Decade cannot be blank")
+    @Size(max = 20, message = "Decade must be less than 20 characters")
+    private String decade;
 
     public Car() {
         // No-argument constructor required by JPA
     }
 
-    public Car(String name, String make, String model, String mp3FileName) {
+    public Car(String name, String make, String model, String mp3FileName, String category, String originCountry, String decade) {
         this.name = name;
         this.make = make;
         this.model = model;
         this.mp3FileName = mp3FileName;
+        this.category = category;
+        this.originCountry = originCountry;
+        this.decade = decade;
     }
 
     public String getName() {
@@ -56,6 +74,18 @@ public class Car {
         return mp3FileName;
     }
     
+    public String getCategory() {
+        return category;
+    }
+    
+    public String getOriginCountry() {
+        return originCountry;
+    }
+    
+    public String getDecade() {
+        return decade;
+    }
+    
     @Override
     public String toString() {
         return "Cars{" +
@@ -63,6 +93,9 @@ public class Car {
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", mp3FileName='" + mp3FileName + '\'' +
+                ", category='" + category + '\'' +
+                ", originCountry='" + originCountry + '\'' +
+                ", decade='" + decade + '\'' +
                 '}';
     }
 }

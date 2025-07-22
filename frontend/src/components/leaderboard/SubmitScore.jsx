@@ -25,7 +25,6 @@ function SubmitScore() {
       const leaderboardData = await leaderboardService.getLeaderboard();
       setLeaderboard(leaderboardData);
     } catch (error) {
-      console.error('Error fetching leaderboard:', error);
       setError('Failed to load leaderboard. You can still submit your score.');
     }
   }, []);
@@ -70,8 +69,8 @@ function SubmitScore() {
       // Refresh leaderboard
       await fetchLeaderboardData();
     } catch (error) {
-      console.error('Error submitting score:', error);
-      setError(error.message || 'Failed to submit score. Please try again.');
+      setMessage('Failed to submit score. Please try again.');
+      setIsSubmitting(false);
     } finally {
       setIsSubmitting(false);
     }

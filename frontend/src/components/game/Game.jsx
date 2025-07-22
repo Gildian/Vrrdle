@@ -37,7 +37,6 @@ function Game() {
       setWasCorrect(false);
       setGuess('');
     } catch (error) {
-      console.error('Error fetching car:', error);
       setError(error.message || 'Failed to load car. Please try again.');
     } finally {
       setIsLoading(false);
@@ -49,7 +48,6 @@ function Game() {
       const leaderboardData = await leaderboardService.getLeaderboard();
       setLeaderboard(leaderboardData);
     } catch (error) {
-      console.error('Error fetching leaderboard:', error);
       // Don't show error for leaderboard as it's not critical
     }
   }, []);
@@ -112,7 +110,6 @@ function Game() {
         setMessage(`Incorrect. Try again! (${MAX_GUESSES - newGuessCount} guesses left)`);
       }
     } catch (error) {
-      console.error('Error processing guess:', error);
       setError('An error occurred while processing your guess. Please try again.');
     } finally {
       setIsSubmitting(false);

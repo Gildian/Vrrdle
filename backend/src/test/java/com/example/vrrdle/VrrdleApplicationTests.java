@@ -8,6 +8,6 @@ class VrrdleApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// Test that the Spring context loads successfully
 	}
-
 }
