@@ -99,9 +99,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # React/Vite build output
-frontend/vrrdle/dist/
-frontend/vrrdle/dist-ssr/
-frontend/vrrdle/build/
+frontend/dist/
+frontend/dist-ssr/
+frontend/build/
 
 # Coverage reports
 coverage/
