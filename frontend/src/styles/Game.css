@@ -45,16 +45,92 @@
 
 .audio-section {
   margin: 2rem 0;
-  padding: 1.5rem;
-  background: #232a34;
-  border-radius: 12px;
+  padding: 2rem;
+  background: linear-gradient(145deg, #232a34, #1e252e);
+  border-radius: 16px;
   border: 2px solid #7ec4cf;
+  box-shadow: 0 4px 15px rgba(126, 196, 207, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.audio-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7ec4cf, #f7b801, #7ec4cf);
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.audio-section h3 {
+  color: #7ec4cf;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.4em;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .audio-section audio {
   width: 100%;
-  max-width: 400px;
-  height: 54px;
+  max-width: 450px;
+  height: 60px;
+  border-radius: 30px;
+  background: #181c24;
+  border: 2px solid #7ec4cf;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.audio-section audio:hover {
+  border-color: #f7b801;
+  box-shadow: 0 6px 20px rgba(247, 184, 1, 0.2);
+  transform: translateY(-2px);
+}
+
+.audio-section audio::-webkit-media-controls-panel {
+  background-color: #181c24;
+  border-radius: 30px;
+}
+
+.audio-section audio::-webkit-media-controls-play-button {
+  background-color: #7ec4cf;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.audio-section audio::-webkit-media-controls-timeline {
+  background-color: #232a34;
+  border-radius: 25px;
+  margin: 0 15px;
+}
+
+.audio-section audio::-webkit-media-controls-current-time-display,
+.audio-section audio::-webkit-media-controls-time-remaining-display {
+  color: #bfc9d1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.audio-player-hint {
+  margin-top: 1rem;
+  color: #bfc9d1;
+  font-size: 0.9em;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .guess-section {
@@ -271,6 +347,63 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(126, 196, 207, 0.3);
+}
+
+.new-game-btn:hover:not(:disabled) {
+  background: #5ea9b4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(126, 196, 207, 0.4);
+}
+
+.new-game-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive Design for Audio Player */
+@media (max-width: 768px) {
+  .audio-section {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .audio-section h3 {
+    font-size: 1.2em;
+    margin-bottom: 1rem;
+  }
+  
+  .audio-section audio {
+    height: 50px;
+    max-width: 100%;
+  }
+  
+  .audio-player-hint {
+    font-size: 0.8em;
+    margin-top: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .audio-section {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .audio-section h3 {
+    font-size: 1.1em;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .audio-section audio {
+    height: 45px;
+  }
+  
+  .audio-player-hint {
+    font-size: 0.75em;
+    text-align: center;
+  }
 }
 
 .new-game-btn:hover {

@@ -167,10 +167,14 @@ function Game() {
         
         {carSound && (
           <div className="audio-section">
+            <h3>🎵 Listen to the Engine Sound</h3>
             <audio controls key={carSound}>
               <source src={`${API_CONFIG.BASE_URL}${carSound}`} type="audio/wav" />
               Your browser does not support the audio element.
             </audio>
+            <div className="audio-player-hint">
+              🎧 Use headphones for the best experience
+            </div>
           </div>
         )}
         
