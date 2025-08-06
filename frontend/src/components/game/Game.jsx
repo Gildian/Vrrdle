@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { gameService } from '../../services/gameService';
 import { leaderboardService } from '../../services/leaderboardService';
 import { Loading } from '../ui/Loading';
+import AudioPlayer from '../ui/AudioPlayer';
 import { GAME_CONFIG, API_CONFIG, UI_CONFIG } from '../../constants/config';
 import '../../styles/Game.css';
 
@@ -48,7 +49,6 @@ function Game() {
       const leaderboardData = await leaderboardService.getLeaderboard();
       setLeaderboard(leaderboardData);
     } catch (error) {
-      // Don't show error for leaderboard as it's not critical
     }
   }, []);
 
@@ -123,11 +123,6 @@ function Game() {
     }
   };
 
-  const handleNewGame = () => {
-    fetchRandomCar();
-    fetchLeaderboardData();
-  };
-
   const handleRetry = () => {
     setError('');
     fetchRandomCar();
@@ -166,16 +161,10 @@ function Game() {
         <p className="game-description">Guess the car based on its engine sound!</p>
         
         {carSound && (
-          <div className="audio-section">
-            <h3>🎵 Listen to the Engine Sound</h3>
-            <audio controls key={carSound}>
-              <source src={`${API_CONFIG.BASE_URL}${carSound}`} type="audio/wav" />
-              Your browser does not support the audio element.
-            </audio>
-            <div className="audio-player-hint">
-              🎧 Use headphones for the best experience
-            </div>
-          </div>
+          <AudioPlayer 
+            src={`${API_CONFIG.BASE_URL}${carSound}`}
+            className="game-audio-player"
+          />
         )}
         
         <div className="guess-section">
@@ -234,12 +223,6 @@ function Game() {
               <p className="no-scores">No scores yet. Be the first!</p>
             )}
           </div>
-        </div>
-
-        <div className="game-actions">
-          <button onClick={handleNewGame} className="new-game-btn" disabled={isLoading}>
-            🔄 New Game
-          </button>
         </div>
       </div>
     </div>
