@@ -1,4 +1,4 @@
-# 🚗 Vrrdle 2.0
+# 🚗 Vrrdle
 
 > A car engine sound guessing game inspired by Wordle
 
