@@ -156,6 +156,7 @@ const AudioPlayer = ({ src, className = '' }) => {
             <div 
               className="progress-bar"
               ref={progressRef}
+
               onClick={handleProgressClick}
             >
               <div className="progress-track">
@@ -178,7 +179,7 @@ const AudioPlayer = ({ src, className = '' }) => {
           <div className="volume-container">
             <svg 
               width="20" 
-              height="20" 
+              height="=20" 
               viewBox="0 0 24 24" 
               fill="currentColor"
               className="volume-icon"
@@ -199,17 +200,74 @@ const AudioPlayer = ({ src, className = '' }) => {
         </div>
 
         <div className="audio-visualizer">
-          <div className="wave-container">
-            {[...Array(12)].map((_, i) => (
-              <div 
-                key={i} 
-                className={`wave-bar ${isPlaying ? 'animating' : ''}`}
-                style={{ 
-                  animationDelay: `${i * 0.1}s`,
-                  height: `${Math.random() * 20 + 10}px`
-                }}
-              ></div>
-            ))}
+          <div className="car-exhaust-container">
+            {/* Car SVG Icon */}
+            <svg 
+              className={`car-icon ${isPlaying ? 'engine-running' : ''}`}
+              viewBox="0 0 100 60" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Car body main */}
+              <rect x="15" y="25" width="65" height="15" rx="4" />
+              <rect x="25" y="18" width="45" height="10" rx="3" />
+              
+              {/* Front and back bumpers */}
+              <rect x="12" y="28" width="6" height="8" rx="2" fill="currentColor" opacity="0.8" />
+              <rect x="77" y="28" width="6" height="8" rx="2" fill="currentColor" opacity="0.8" />
+              
+              {/* Wheels */}
+              <circle cx="28" cy="45" r="8" fill="currentColor" />
+              <circle cx="67" cy="45" r="8" fill="currentColor" />
+              <circle cx="28" cy="45" r="5" fill="#181c24" />
+              <circle cx="67" cy="45" r="5" fill="#181c24" />
+              <circle cx="28" cy="45" r="2" fill="currentColor" opacity="0.6" />
+              <circle cx="67" cy="45" r="2" fill="currentColor" opacity="0.6" />
+              
+              {/* Simple exhaust port */}
+              <ellipse cx="82" cy="32" rx="2" ry="1.5" fill="#181c24" opacity="0.8" />
+              
+              {/* Windshield - one continuous piece */}
+              <rect x="30" y="19" width="35" height="7" rx="2" fill="#181c24" opacity="0.6" />
+              
+              {/* Side windows */}
+              <rect x="35" y="20" width="8" height="5" rx="1" fill="#181c24" opacity="0.7" />
+              <rect x="52" y="20" width="8" height="5" rx="1" fill="#181c24" opacity="0.7" />
+              
+              {/* Door lines */}
+              <line x1="45" y1="25" x2="45" y2="40" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
+              <line x1="60" y1="25" x2="60" y2="40" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
+              
+              {/* Headlights */}
+              <ellipse cx="15" cy="32" rx="2.5" ry="3" fill="rgba(247, 184, 1, 0.9)" />
+              <ellipse cx="15" cy="32" rx="1" ry="1.5" fill="rgba(255, 255, 255, 0.8)" />
+              
+              {/* Taillights */}
+              <ellipse cx="82" cy="29" rx="1.5" ry="2" fill="rgba(220, 53, 69, 0.8)" />
+              <ellipse cx="82" cy="35" rx="1.5" ry="2" fill="rgba(220, 53, 69, 0.8)" />
+              
+              {/* Body accent line */}
+              <rect x="18" y="33" width="60" height="1" fill="currentColor" opacity="0.3" />
+              
+              {/* Grille details */}
+              <rect x="12" y="30" width="3" height="1" fill="currentColor" opacity="0.6" />
+              <rect x="12" y="32" width="3" height="1" fill="currentColor" opacity="0.6" />
+              <rect x="12" y="34" width="3" height="1" fill="currentColor" opacity="0.6" />
+            </svg>
+            
+            {/* Exhaust waves */}
+            <div className="wave-container">
+              {[...Array(10)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className={`wave-bar ${isPlaying ? 'animating' : ''}`}
+                  style={{ 
+                    animationDelay: `${i * 0.15 + Math.random() * 0.1}s`,
+                    height: `${Math.random() * 25 + 15}px`,
+                    animationDuration: `${1.2 + Math.random() * 0.6}s`
+                  }}
+                ></div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

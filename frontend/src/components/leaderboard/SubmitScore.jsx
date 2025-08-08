@@ -101,7 +101,6 @@ function SubmitScore() {
   return (
     <div className="submit-score-container">
       <div className="submit-score-card">
-        <h1>🎉 Game Complete!</h1>
         
         <div className="game-result">
           {wasCorrect ? (
@@ -116,7 +115,6 @@ function SubmitScore() {
             </>
           ) : (
             <>
-              <h2>💪 Nice Try!</h2>
               <p className="car-name">The car was: <strong>{carName}</strong></p>
               <p className="score-info">Better luck next time!</p>
               <div className="score-display">
@@ -177,7 +175,7 @@ function SubmitScore() {
 
         <div className="actions">
           <button onClick={handlePlayAgain} className="play-again-btn">
-            🎮 Play Again
+            Play Again
           </button>
         </div>
       </div>
