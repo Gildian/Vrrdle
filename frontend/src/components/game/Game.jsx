@@ -143,7 +143,7 @@ function Game() {
       <div className="game-container">
         <div className="game-card">
           <div className="error-message">
-            <h2>🚨 Error</h2>
+            <h2>Error</h2>
             <p>{error}</p>
             <button onClick={handleRetry} className="retry-button">
               Try Again
