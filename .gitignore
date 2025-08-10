@@ -162,6 +162,13 @@ application-dev.properties
 logs/
 *.pid
 
+# Audio files
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.aac
+
 # Static assets (except example files)
 src/main/resources/static/sounds/
 !src/main/resources/static/sounds/example1.wav
