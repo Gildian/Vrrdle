@@ -1,21 +1,125 @@
+/* Import retro/cyberpunk fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+/* CSS Variables for Retro Theme */
+:root {
+  --neon-pink: #ff1493;
+  --neon-cyan: #00ffff;
+  --neon-purple: #8a2be2;
+  --neon-green: #39ff14;
+  --neon-orange: #ff6600;
+  --dark-bg: #0a0a0f;
+  --card-bg: rgba(10, 10, 15, 0.95);
+  --grid-color: rgba(0, 255, 255, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8ff;
+  --text-accent: #ff6b9d;
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Mono', monospace;
+  margin: 0;
+  padding: 0;
+  background: var(--dark-bg);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Animated Grid Background with Retro Effects */
 .game-container {
   min-height: 100vh;
+  background: 
+    /* Grid pattern */
+    linear-gradient(90deg, transparent 49%, var(--grid-color) 50%, transparent 51%),
+    linear-gradient(transparent 49%, var(--grid-color) 50%, transparent 51%),
+    /* Atmospheric gradients */
+    radial-gradient(circle at 20% 80%, rgba(255, 20, 147, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    /* Base gradient */
+    linear-gradient(135deg, #0a0a0f 0%, #1a0f1a 25%, #0f0a1a 50%, #0a0a0f 100%);
+  background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%, 400% 400%;
+  animation: gridMove 20s linear infinite, gradientPulse 8s ease-in-out infinite alternate;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  position: relative;
 }
 
-.game-card {
-  max-width: 600px;
+@keyframes gridMove {
+  0% { background-position: 0 0, 0 0, 0% 0%, 0% 0%, 0% 0%, 0% 50%; }
+  100% { background-position: 50px 50px, 50px 50px, 0% 0%, 0% 0%, 0% 0%, 100% 50%; }
+}
+
+@keyframes gradientPulse {
+  0% { background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%, 400% 400%; }
+  100% { background-size: 60px 60px, 60px 60px, 120% 120%, 120% 120%, 120% 120%, 600% 600%; }
+}
+
+/* Floating particles effect */
+.game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  background: #181c24;
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, var(--neon-cyan), transparent),
+    radial-gradient(2px 2px at 40px 70px, var(--neon-pink), transparent),
+    radial-gradient(1px 1px at 90px 40px, var(--neon-purple), transparent),
+    radial-gradient(1px 1px at 130px 80px, var(--neon-green), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: particleFloat 15s linear infinite;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-100px) rotate(360deg); }
+}
+
+/* Main Game Card */
+.game-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 
+    0 0 50px rgba(0, 255, 255, 0.2),
+    0 0 100px rgba(255, 20, 147, 0.1),
+    inset 0 0 50px rgba(255, 255, 255, 0.02);
+  max-width: 700px;
+  width: 100%;
   text-align: center;
-  animation: fadeIn 0.6s ease-out;
+  border: 2px solid;
+  border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple)) 1;
+  position: relative;
+  z-index: 1;
+  animation: cardGlow 4s ease-in-out infinite alternate, fadeIn 0.6s ease-out;
+}
+
+@keyframes cardGlow {
+  0% { 
+    box-shadow: 
+      0 0 20px rgba(0, 255, 255, 0.2),
+      0 0 40px rgba(255, 20, 147, 0.1),
+      inset 0 0 20px rgba(255, 255, 255, 0.02);
+  }
+  100% { 
+    box-shadow: 
+      0 0 40px rgba(0, 255, 255, 0.4),
+      0 0 80px rgba(255, 20, 147, 0.2),
+      inset 0 0 40px rgba(255, 255, 255, 0.05);
+  }
 }
 
 @keyframes fadeIn {
@@ -29,56 +133,106 @@
   }
 }
 
+/* Typography with Cyberpunk Style */
 .game-card h1 {
-  font-size: 3em;
-  margin-bottom: 0.5rem;
-  color: #7ec4cf;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  letter-spacing: 2px;
+  font-family: 'Orbitron', monospace;
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textFlow 3s ease-in-out infinite;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  letter-spacing: 0.2em;
+  position: relative;
+}
+
+.game-card h1::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: scanline 2s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes textFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes scanline {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .game-description {
-  font-size: 1.2em;
-  color: #bfc9d1;
-  margin-bottom: 2rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  text-shadow: 0 0 10px rgba(184, 184, 255, 0.3);
+  letter-spacing: 0.05em;
+  opacity: 0.9;
 }
 
+/* Modern Audio Section with Retro Vibes */
 .audio-section {
-  margin: 2rem 0;
+  margin: 2.5rem 0;
   padding: 2rem;
-  background: linear-gradient(145deg, #232a34, #1e252e);
-  border-radius: 16px;
-  border: 2px solid #7ec4cf;
-  box-shadow: 0 4px 15px rgba(126, 196, 207, 0.1);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.05), rgba(255, 20, 147, 0.05));
+  border-radius: 20px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
+  animation: audioGlow 5s ease-in-out infinite alternate;
 }
 
 .audio-section::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #7ec4cf, #f7b801, #7ec4cf);
-  animation: shimmer 2s ease-in-out infinite;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  animation: borderScan 3s linear infinite;
 }
 
-@keyframes shimmer {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+@keyframes borderScan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes audioGlow {
+  0% { 
+    border-color: rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  }
+  100% { 
+    border-color: rgba(255, 20, 147, 0.5);
+    box-shadow: 0 0 30px rgba(255, 20, 147, 0.2);
+  }
 }
 
 .audio-section h3 {
-  color: #7ec4cf;
+  color: var(--neon-cyan);
   margin: 0 0 1.5rem 0;
-  font-size: 1.4em;
+  font-size: 1.4rem;
   font-weight: 600;
+  font-family: 'Orbitron', monospace;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
 }
 
 .audio-section audio {
@@ -86,58 +240,62 @@
   max-width: 450px;
   height: 60px;
   border-radius: 30px;
-  background: #181c24;
-  border: 2px solid #7ec4cf;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--neon-cyan);
   outline: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
 }
 
 .audio-section audio:hover {
-  border-color: #f7b801;
-  box-shadow: 0 6px 20px rgba(247, 184, 1, 0.2);
+  border-color: var(--neon-pink);
+  box-shadow: 0 0 30px rgba(255, 20, 147, 0.4);
   transform: translateY(-2px);
 }
 
 .audio-section audio::-webkit-media-controls-panel {
-  background-color: #181c24;
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 30px;
 }
 
 .audio-section audio::-webkit-media-controls-play-button {
-  background-color: #7ec4cf;
+  background-color: var(--neon-cyan);
   border-radius: 50%;
   margin-left: 10px;
 }
 
 .audio-section audio::-webkit-media-controls-timeline {
-  background-color: #232a34;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 25px;
   margin: 0 15px;
 }
 
 .audio-section audio::-webkit-media-controls-current-time-display,
 .audio-section audio::-webkit-media-controls-time-remaining-display {
-  color: #bfc9d1;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-secondary);
+  font-family: 'Space Mono', monospace;
 }
 
 .audio-player-hint {
   margin-top: 1rem;
-  color: #bfc9d1;
-  font-size: 0.9em;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
   opacity: 0.8;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  font-family: 'Space Mono', monospace;
 }
 
+/* Futuristic Input Section */
 .guess-section {
-  margin: 2rem 0;
-  background: #232a34;
-  border-radius: 12px;
+  margin: 2.5rem 0;
   padding: 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  backdrop-filter: blur(10px);
 }
 
 .input-group {
@@ -151,49 +309,58 @@
 
 .input-group input {
   padding: 1rem 1.5rem;
-  border-radius: 8px;
-  border: 2px solid #7ec4cf;
-  font-size: 1.2em;
-  background: #181c24;
-  color: #fff;
-  min-width: 250px;
+  border-radius: 10px;
+  border: 2px solid var(--neon-cyan);
+  font-size: 1.2rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--text-primary);
+  font-family: 'Space Mono', monospace;
+  min-width: 300px;
   transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
 }
 
 .input-group input:focus {
   outline: none;
-  border-color: #f7b801;
-  box-shadow: 0 0 0 3px rgba(247, 184, 1, 0.1);
+  border-color: var(--neon-pink);
+  box-shadow: 
+    0 0 20px rgba(255, 20, 147, 0.4),
+    inset 0 0 10px rgba(255, 20, 147, 0.1);
   transform: scale(1.02);
 }
 
 .input-group input:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  border-color: #666;
 }
 
 .guess-btn {
-  background: #f7b801;
-  color: #181c24;
+  background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+  color: white;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1.2em;
+  border-radius: 10px;
+  font-size: 1.2rem;
   font-weight: bold;
+  font-family: 'Orbitron', monospace;
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 120px;
+  box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .guess-btn:hover:not(:disabled) {
-  background: #ffd700;
+  background: linear-gradient(45deg, var(--neon-cyan), var(--neon-green));
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(247, 184, 1, 0.3);
+  box-shadow: 0 5px 25px rgba(0, 255, 255, 0.4);
 }
 
 .guess-btn:disabled {
-  background: #444c56;
-  color: #bfc9d1;
+  background: linear-gradient(45deg, #333, #555);
+  color: #888;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
@@ -207,10 +374,12 @@
 }
 
 .guesses-left {
-  font-size: 1.3em;
-  color: #7ec4cf;
+  font-size: 1.4rem;
+  color: var(--neon-green);
   font-weight: bold;
+  font-family: 'Orbitron', monospace;
   margin: 0;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
 }
 
 .message {
@@ -270,60 +439,95 @@
   50% { opacity: 0.4; }
 }
 
+/* Cyberpunk Current Leaderboard Section */
 .current-leaderboard {
-  margin: 2rem 0;
-  background: #232a34;
-  border-radius: 12px;
-  padding: 1.5rem;
+  margin: 3rem 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(138, 43, 226, 0.1));
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid var(--neon-purple);
+  box-shadow: 0 0 30px rgba(138, 43, 226, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 .current-leaderboard h3 {
-  color: #7ec4cf;
-  margin-bottom: 1rem;
-  font-size: 1.4em;
+  color: var(--neon-cyan);
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-family: 'Orbitron', monospace;
+  text-align: center;
+  text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .mini-leaderboard {
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .mini-leaderboard-entry {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #181c24;
-  margin: 0.3rem 0;
-  padding: 0.8rem 1rem;
-  border-radius: 6px;
-  transition: background 0.3s ease;
+  background: rgba(0, 0, 0, 0.3);
+  margin: 0.5rem 0;
+  padding: 1.2rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  font-family: 'Space Mono', monospace;
 }
 
 .mini-leaderboard-entry:hover {
-  background: #1e252f;
+  background: rgba(255, 20, 147, 0.1);
+  border-color: var(--neon-pink);
+  transform: translateX(5px);
+  box-shadow: 0 0 15px rgba(255, 20, 147, 0.3);
 }
 
 .mini-leaderboard-entry .rank {
   font-weight: bold;
-  color: #f7b801;
-  min-width: 30px;
+  color: var(--neon-green);
+  min-width: 40px;
   text-align: left;
-  font-size: 0.9em;
+  font-size: 1.1rem;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+}
+
+.mini-leaderboard-entry:nth-child(1) .rank {
+  color: var(--neon-green);
+  font-size: 1.3rem;
+}
+
+.mini-leaderboard-entry:nth-child(2) .rank {
+  color: var(--neon-cyan);
+  font-size: 1.2rem;
+}
+
+.mini-leaderboard-entry:nth-child(3) .rank {
+  color: var(--neon-pink);
+  font-size: 1.1rem;
 }
 
 .mini-leaderboard-entry .username {
   flex: 1;
-  color: #fff;
+  color: var(--text-primary);
   text-align: center;
-  font-size: 1em;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .mini-leaderboard-entry .score {
   font-weight: bold;
-  color: #7ec4cf;
-  min-width: 40px;
+  color: var(--neon-cyan);
+  min-width: 50px;
   text-align: right;
-  font-size: 1em;
+  font-size: 1.1rem;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
 .no-scores {
@@ -407,55 +611,77 @@
 }
 
 .new-game-btn:hover {
-  background: #9dd4dc;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(126, 196, 207, 0.4);
+  background: linear-gradient(45deg, var(--neon-cyan), var(--neon-green));
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.5);
 }
 
+/* Cyberpunk Error Messages */
 .error-message {
   text-align: center;
-  padding: 2rem;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(0, 0, 0, 0.3));
+  border: 2px solid rgba(220, 53, 69, 0.5);
+  border-radius: 15px;
+  margin: 2rem 0;
+  backdrop-filter: blur(10px);
 }
 
 .error-message h2 {
-  color: #dc3545;
-  margin-bottom: 1rem;
+  color: #ff4444;
+  margin-bottom: 1.5rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 2rem;
+  text-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .error-message p {
-  color: #bfc9d1;
-  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 .retry-button {
-  background: #f7b801;
-  color: #181c24;
+  background: linear-gradient(45deg, #ff4444, #ff6666);
+  color: white;
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1.1em;
+  padding: 1.2rem 2.5rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
   font-weight: bold;
+  font-family: 'Orbitron', monospace;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
 }
 
 .retry-button:hover {
-  background: #ffd700;
+  background: linear-gradient(45deg, var(--neon-green), var(--neon-cyan));
   transform: translateY(-2px);
+  box-shadow: 0 5px 25px rgba(57, 255, 20, 0.4);
 }
 
-/* Responsive design */
+/* Enhanced Cyberpunk Responsive Design */
 @media (max-width: 768px) {
   .game-container {
     padding: 1rem;
+    background-size: 30px 30px;
   }
   
   .game-card {
     padding: 1.5rem;
+    margin: 1rem 0;
   }
   
   .game-card h1 {
-    font-size: 2.5em;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
   }
   
   .input-group {
@@ -466,18 +692,152 @@
   .input-group input {
     width: 100%;
     min-width: unset;
+    font-size: 1.1rem;
+    padding: 1rem;
   }
   
   .guess-btn, .new-game-btn {
     width: 100%;
+    font-size: 1.1rem;
+    padding: 1rem;
   }
   
   .game-info {
     flex-direction: column;
     gap: 1rem;
+    text-align: center;
   }
   
   .mini-leaderboard-entry {
-    padding: 0.6rem 0.8rem;
+    padding: 1rem;
+    margin: 0.3rem 0;
+  }
+  
+  .mini-leaderboard-entry .rank,
+  .mini-leaderboard-entry .username,
+  .mini-leaderboard-entry .score {
+    font-size: 1rem;
+  }
+  
+  .current-leaderboard {
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .current-leaderboard h3 {
+    font-size: 1.5rem;
+  }
+  
+  .audio-section {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .audio-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-container {
+    padding: 0.5rem;
+    background-size: 20px 20px;
+  }
+  
+  .game-card {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .game-card h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .guess-section {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .input-group input {
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+  }
+  
+  .guess-btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .guesses-left {
+    font-size: 1.2rem;
+  }
+  
+  .current-leaderboard {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  .current-leaderboard h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mini-leaderboard-entry {
+    padding: 0.8rem 1rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.3rem;
+  }
+  
+  .mini-leaderboard-entry .rank,
+  .mini-leaderboard-entry .username,
+  .mini-leaderboard-entry .score {
+    font-size: 0.9rem;
+    min-width: unset;
+    text-align: center;
+  }
+  
+  .audio-section {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .audio-section h3 {
+    font-size: 1.1rem;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .audio-section audio {
+    height: 45px;
+    max-width: 100%;
+  }
+  
+  .audio-player-hint {
+    font-size: 0.75rem;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  
+  .error-message {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .error-message h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .error-message p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .retry-button {
+    font-size: 1rem;
+    padding: 1rem 2rem;
   }
 }
